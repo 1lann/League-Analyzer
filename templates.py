@@ -11,7 +11,7 @@ templates["htmlHeader"] = Template("""
 <title>$title</title>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="css/skeleton.min.css">
+<link rel="stylesheet" type="text/css" href="static/css/skeleton.min.css">
 $unsafe_stylesheets
 </head>
 <body>

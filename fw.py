@@ -5,7 +5,7 @@ import templates
 from string import Template
 
 def writeHeader():
-	print("Content-type: text/html; charset=utf-8\r\n\r\n")
+	print("Content-type: text/html; charset=utf-8\r")
 
 def renderHeader(title, stylesheets = None):
 	args = {}
@@ -14,7 +14,7 @@ def renderHeader(title, stylesheets = None):
 
 	if stylesheets != None:
 		for css in stylesheets:
-			args["unsafe_stylesheets"] += '<link rel="stylesheet" type="text/css" href="css/' + css + '">\n'
+			args["unsafe_stylesheets"] += '<link rel="stylesheet" type="text/css" href="static/css/' + css + '">\n'
 
 	templates.executeByName("htmlHeader", args)
 
@@ -24,7 +24,7 @@ def renderFooter(scripts = None):
 
 	if scripts != None:
 		for script in scripts:
-			args["unsafe_scripts"] += '<script type="text/javascript" src="js/' + script + '"></script>\n'
+			args["unsafe_scripts"] += '<script type="text/javascript" src="static/js/' + script + '"></script>\n'
 
 	templates.executeByName("htmlFooter", args)
 
