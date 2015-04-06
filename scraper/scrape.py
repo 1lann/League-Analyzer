@@ -279,7 +279,7 @@ while True:
 				games = api.api_challenge(five_now)
 			except:
 				print("Error retrieving URF games for region " +
-					api.default_region + " and time " + string(five_now))
+					api.default_region + " and time " + str(five_now))
 				print(sys.exc_info()[0])
 				print(sys.exc_info()[1])
 				continue
