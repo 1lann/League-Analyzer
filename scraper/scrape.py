@@ -270,7 +270,8 @@ while True:
 	time.sleep(2)
 	temp_now = datetime.datetime.now()
 	last_five_minutes = temp_now.minute - (temp_now.minute % 5)
-	five_now = int(time.mktime(temp_now.replace(minute=last_five_minutes, second=0).timetuple()))
+	last_hour = temp_now.hour - 1
+	five_now = int(time.mktime(temp_now.replace(hour=last_hour, minute=last_five_minutes, second=0).timetuple()))
 
 	# Get new batch of URF games
 	if last_now != five_now:
