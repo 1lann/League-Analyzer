@@ -267,7 +267,8 @@ for i in range(len(regions_apis)):
 	# regions_apis[i].process_queue = seed.region(regions_apis[i].default_region)
 
 while True:
-	temp_now = datetime.datetime.utcnow()
+	time.sleep(2)
+	temp_now = datetime.datetime.now()
 	last_five_minutes = temp_now.minute - (temp_now.minute % 5)
 	five_now = int(time.mktime(temp_now.replace(minute=last_five_minutes, second=0).timetuple()))
 
