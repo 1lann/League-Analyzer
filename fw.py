@@ -1,13 +1,16 @@
-#!/usr/bin/python
+# coding=UTF-8
+
+# Framework pacakge
+# Wrapper for templates package
 
 import cgi
 import templates
 from string import Template
 
-def writeHeader():
+def write_header():
 	print("Content-type: text/html; charset=utf-8\r")
 
-def renderHeader(title, stylesheets = None):
+def render_header(title, stylesheets = None):
 	args = {}
 	args["title"] = title
 	args["unsafe_stylesheets"] = ""
@@ -16,9 +19,9 @@ def renderHeader(title, stylesheets = None):
 		for css in stylesheets:
 			args["unsafe_stylesheets"] += '<link rel="stylesheet" type="text/css" href="static/css/' + css + '">\n'
 
-	templates.executeByName("htmlHeader", args)
+	templates.execute_by_name("htmlHeader", args)
 
-def renderFooter(scripts = None):
+def render_footer(scripts = None):
 	args = {}
 	args["unsafe_scripts"] = ""
 
@@ -26,10 +29,10 @@ def renderFooter(scripts = None):
 		for script in scripts:
 			args["unsafe_scripts"] += '<script type="text/javascript" src="static/js/' + script + '"></script>\n'
 
-	templates.executeByName("htmlFooter", args)
+	templates.execute_by_name("htmlFooter", args)
 
 def render(template, args = None):
-	templates.executeByName(template, args)
+	templates.execute_by_name(template, args)
 
 def template(templateContent, args):
 	templates.execute(Template(templateContent), args)

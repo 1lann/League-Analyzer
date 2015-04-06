@@ -1,14 +1,13 @@
 #!/usr/bin/python
+# coding=UTF-8
 
-import cgi
 import fw
-from string import Template
+import database
 
-fw.writeHeader()
-fw.renderHeader("Home", ["navbar.css", "home.css", "common.css", "fontello.css"])
+fw.write_header()
+fw.render_header("Home", ["navbar.css", "home.css", "fontello.css"])
 
 fw.render("components/navbar")
 fw.render("views/home")
 
-fw.renderFooter()
-
+fw.render_footer()

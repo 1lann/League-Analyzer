@@ -5,3 +5,36 @@ body {
 .bold {
 	font-weight: bold;
 }
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 130px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 90px;
+	border-top: 1px solid lighten(#000000, 80%);
+
+	.container {
+		margin-top: 10px;
+	}
+
+	p {
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+
+	.disclaimer {
+		font-size: 11px;
+		color: lighten(#000000, 40%);
+	}
+}

@@ -15,3 +15,60 @@
 .search {
 	width: 100%;
 }
+
+
+@text-color: lighten(#000000, 40%);
+@hover-color: darken(@text-color, 40%);
+
+.card {
+	.subcontainer {
+		height: 140px;
+		width: 100%;
+	}
+
+	margin-bottom: 30px;
+
+	a {
+		color: @text-color;
+
+		&:hover {
+			color: @hover-color;
+		}
+	}
+
+	border: 1px solid lighten(#000000, 80%);
+
+	&:hover {
+		border: 1px solid lighten(#000000, 50%);
+	}
+
+	.title-box {
+		.card-title {
+			display: block;
+			font-weight: bold;
+			float: left;
+			font-size: 22px;
+			margin-left: 30px;
+			margin-top: 49px;
+		}
+	}
+
+	.card-arrow {
+		float: right;
+		margin-top: 45px;
+		font-size: 30px;
+		margin-right: 20px;
+	}
+
+	ul {
+		width: 160px;
+		float: right;
+		margin-top: 20px;
+		margin-right: 20px;
+		margin-bottom: 15px;
+		li {
+			font-size: 16px;
+			list-style-type: none;
+		}
+	}
+}

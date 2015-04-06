@@ -1,4 +1,7 @@
-#!/usr/bin/python
+# coding=UTF-8
+
+# Templates pacakge
+
 
 from string import Template
 import cgi
@@ -6,24 +9,40 @@ import cgi
 templates = {}
 
 templates["htmlHeader"] = Template("""
+<!DOCTYPE html>
 <html>
 <head>
 <title>$title</title>
-<meta name=viewport content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
 <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="static/css/skeleton.min.css">
+<link rel="stylesheet" type="text/css" href="static/css/common.css">
+<script type="text/javascript" src="static/js/jquery-2.1.3.min.js"></script>
 $unsafe_stylesheets
 </head>
 <body>
 """)
 
 templates["htmlFooter"] = Template("""
+<div class="footer">
+	<div class="container">
+		<p>Made by Jason Chu.</p>
+		<p class="disclaimer">
+			League Analyzer isn't endorsed by Riot Games and doesn't reflect
+			the views or opinions of Riot Games or anyone officially involved
+			in producing or managing League of Legends. League of Legends and
+			Riot Games are trademarks or registered trademarks of Riot Games,
+			Inc. League of Legends © Riot Games, Inc.
+		</p>
+	</div>
+</div>
 $unsafe_scripts
 </body>
 </html>
 """)
 
-def readFile(path):
+def read_file(path):
 	with open(path, 'r') as content_file:
 		return content_file.read()
 
@@ -38,8 +57,8 @@ def execute(template, args):
 
 	print(template.safe_substitute(safeArgs))
 
-def executeByName(templateName, args = None):
-	if templateName in templates:
-		execute(templates[templateName], args)
+def execute_by_name(template_name, args = None):
+	if template_name in templates:
+		execute(templates[template_name], args)
 	else:
-		execute(Template(readFile(templateName + ".html")), args)
+		execute(Template(read_file(template_name + ".html")), args)
