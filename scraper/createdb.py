@@ -7,6 +7,7 @@ from riotwatcher import RiotWatcher
 
 def drop_db(c):
 	print("DROP THE (data)BASE!")
+	raw_input()
 	c.execute("DROP TABLE IF EXISTS MatchSummoner")
 	c.execute("DROP TABLE IF EXISTS Champion")
 	c.execute("DROP TABLE IF EXISTS Ban")

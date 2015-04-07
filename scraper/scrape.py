@@ -296,7 +296,7 @@ while True:
 				try:
 					match_data = api.get_match(game_id, None, True)
 				except:
-					print("Error retrieving game id " + game_id +
+					print("Error retrieving game id " + str(game_id) +
 						" for region " + api.default_region)
 					print(sys.exc_info()[0])
 					print(sys.exc_info()[1])
@@ -315,9 +315,9 @@ while True:
 				if not internal_match_id:
 					continue
 
-				if match_data["teams"][0]["bans"]:
+				if "bans" in match_data["teams"][0]:
 					bans = match_data["teams"][0]["bans"]
-					if match_data["teams"][1]["bans"]:
+					if "bans" in match_data["teams"][1]:
 						bans += match_data["teams"][1]["bans"]
 					try:
 						store_ban_data(c, bans, internal_match_id)
