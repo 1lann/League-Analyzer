@@ -18,7 +18,7 @@ import cgi
 
 templates = {}
 
-templates["htmlHeader"] = Template(Template("""
+templates["htmlHeader"] = Template("""
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +32,7 @@ templates["htmlHeader"] = Template(Template("""
 $unsafe_stylesheets
 </head>
 <body>
-""").safe_substitute({"webRootPath": webRootPath}))
+""")
 
 templates["htmlFooter"] = Template("""
 <div class="footer">
@@ -57,7 +57,7 @@ def read_file(path):
 		return content_file.read()
 
 def execute(template, args):
-	safeArgs = {}
+	safeArgs = {"webRootPath": webRootPath}
 	if args != None:
 		for key, value in args.iteritems():
 			if len(key) > 7 and key[:7] == "unsafe_":

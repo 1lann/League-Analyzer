@@ -1,0 +1,46 @@
+<div class="container">
+	<h1>Champions</h1>
+	<div class="row">
+		<div class="twelve columns">
+			<div class="search-area">
+				<form action="$webRootPath/controllers/search.py" method="GET">
+					<input type="hidden" name="filter" value="champions">
+					<div class="row">
+						<input class="nine columns" type="search" name="query" placeholder="Looking for a specific champion?">
+						<input class="three columns button" type="submit" value="Search">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<h2>Who everyone plays in URF</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Pick Rate</th></tr></thead>
+			<tbody>
+				$unsafe_mostPopular
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostpopular">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+		<div class="six columns">
+			<h2>Permabanned</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Ban Rate</th></tr></thead>
+			<tbody>
+				$unsafe_mostBanned
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostbanned">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

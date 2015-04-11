@@ -346,3 +346,4 @@ while True:
 
 conn.commit()
 c.close()
+conn.close()

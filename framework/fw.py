@@ -8,8 +8,14 @@ import templates
 from templates import webRootPath
 from string import Template
 
+endpointVersion = "5.6.1"
+
 def write_header():
 	print("Content-type: text/html; charset=utf-8\r")
+
+def redirect(path):
+	print("Status: 302 Found")
+	print("Location: " + webRootPath + path + "\r\n\r\n")
 
 def render_header(title, stylesheets = None):
 	args = {}

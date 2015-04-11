@@ -21,7 +21,6 @@ fw.write_header()
 fw.render_header("Home - League Analyzer", ["navbar.css", "home.css", "fontello.css"])
 
 fw.render("components/navbar", {
-	"webRootPath": fw.webRootPath,
 	"championsActiveClass": "",
 	"itemsActiveClass": ""
 })
