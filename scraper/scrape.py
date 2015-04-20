@@ -7,7 +7,6 @@ from riotwatcher import OCEANIA
 from riotwatcher import EUROPE_NORDIC_EAST
 from riotwatcher import NORTH_AMERICA
 from riotwatcher import KOREA
-import seed
 
 from createdb import create_db
 
@@ -16,7 +15,6 @@ import sys
 import sqlite3
 import datetime
 import time
-import traceback
 
 regions_apis = []
 

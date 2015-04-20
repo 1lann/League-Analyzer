@@ -14,8 +14,23 @@
 		</div>
 	</div>
 	<div class="row">
+		<div class="twelve columns">
+			<h2>Average statistics</h2>
+			<p class="general-area">
+				<span class="statistics-heading">Champion pick rate:</span>
+				$averagePickrate%<br>
+				<span class="statistics-heading">Champion ban rate:</span>
+				$averageBanrate%<br>
+				<span class="statistics-heading">Game length:</span>
+				$averageGameLength mins<br>
+				<span class="statistics-heading">Champion KDA:</span>
+				$averageKills/$averageDeaths/$averageAssists<br>
+			</p>
+		</div>
+	</div>
+	<div class="row">
 		<div class="six columns">
-			<h2>Who everyone plays in URF</h2>
+			<h2>Who everyone plays</h2>
 			<table>
 			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Pick Rate</th></tr></thead>
 			<tbody>
@@ -29,6 +44,22 @@
 			</div>
 		</div>
 		<div class="six columns">
+			<h2>All those wins</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Winrate</th></tr></thead>
+			<tbody>
+				$unsafe_mostWins
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostwins">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
 			<h2>Permabanned</h2>
 			<table>
 			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Ban Rate</th></tr></thead>
@@ -38,6 +69,156 @@
 			</table>
 			<div class="more">
 				<a href="$webRootPath/controllers/champions/general.py?filter=mostbanned">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+		<div class="six columns">
+			<h2>Who plays that?</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Pick Rate</th></tr></thead>
+			<tbody>
+				$unsafe_leastPopular
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=leastpopular">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<h2>Shortest games.</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Length</th></tr></thead>
+			<tbody>
+				$unsafe_shortestLength
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=shortestlength">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+		<div class="six columns">
+			<h2>Longest games.</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Length</th></tr></thead>
+			<tbody>
+				$unsafe_longestLength
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=longestlength">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<h2>Kills. A lot.</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Kills</th></tr></thead>
+			<tbody>
+				$unsafe_mostKills
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostkills">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+		<div class="six columns">
+			<h2>Dies. A lot.</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Deaths</th></tr></thead>
+			<tbody>
+				$unsafe_mostDeaths
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostdeaths">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<h2>Assists. A lot.</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Deaths</th></tr></thead>
+			<tbody>
+				$unsafe_mostAssists
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostassists">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+		<div class="six columns">
+			<h2>So weak!</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Winrate</th></tr></thead>
+			<tbody>
+				$unsafe_leastWins
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=leastwins">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<h2>Tons of damage (to champions).</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Damage Dealt</th></tr></thead>
+			<tbody>
+				$unsafe_mostDamage
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostdamagedealt">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+		<div class="six columns">
+			<h2>Peels so hard</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Damage Taken</th></tr></thead>
+			<tbody>
+				$unsafe_mostDamageReceived
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostdamagereceived">
+					View More<span class="icon-right-open"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<h2>Gold rush.</h2>
+			<table>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Gold Earned</th></tr></thead>
+			<tbody>
+				$unsafe_mostGold
+			</tbody>
+			</table>
+			<div class="more">
+				<a href="$webRootPath/controllers/champions/general.py?filter=mostgold">
 					View More<span class="icon-right-open"></span>
 				</a>
 			</div>

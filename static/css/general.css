@@ -1,0 +1,1 @@
+table th:nth-child(0n+1),table td:nth-child(0n+1){width:100px}table th:nth-child(0n+2),table td:nth-child(0n+2){width:100px}table th:last-child,table td:last-child{width:200px}

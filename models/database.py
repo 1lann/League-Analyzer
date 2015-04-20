@@ -10,7 +10,6 @@ while os.path.basename(rootPath) != "analyzer":
 
 import sqlite3
 import json
-import copy
 from string import Template
 
 conn = None
@@ -51,10 +50,10 @@ def store_cache(key, value):
 	c.execute("INSERT INTO Cache (Key, Value) VALUES (?, ?)", (json.dumps(key), json.dumps(value),))
 	conn.commit()
 
-def get_highest_wins_items(champion=None):
+def get_most_wins_items(champion=None):
 	global c
 
-	cacheKey = {"action": "get_highest_winrate_items", "champion": champion}
+	cacheKey = {"action": "get_most_winrate_items", "champion": champion}
 
 	cached = get_cache(cacheKey)
 	if cached != None:
@@ -109,8 +108,8 @@ def get_highest_wins_items(champion=None):
 	store_cache(cacheKey, parsedResults)
 	return parsedResults
 
-def get_lowest_wins_items(champion=None):
-	results = get_highest_wins_items(champion)
+def get_least_wins_items(champion=None):
+	results = get_most_wins_items(champion)
 	results.reverse()
 	return results
 
@@ -162,7 +161,7 @@ def get_most_popular_items(champion=None):
 		parsedResult["itemDescription"] = result[2]
 		parsedResult["wikiLink"] = result[3]
 		parsedResult["itemImage"] = result[4]
-		parsedResult["purchases"] = results[5]
+		parsedResult["purchases"] = result[5]
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
@@ -188,7 +187,7 @@ def get_most_popular_champions(item=None):
 		SELECT Champion.Id, Champion.Name, Champion.Title,
 		Champion.WikiLink, Champion.Image, COUNT(*),
 		(CAST(COUNT(*) AS float) / (
-			SELECT CAST(COUNT(*) AS float) FROM MatchSummoner
+			SELECT CAST(COUNT(distinct InternalMatchId) AS float) FROM MatchSummoner
 		)) * 100.0 as playrate
 		FROM MatchSummoner
 		INNER JOIN Champion
@@ -201,7 +200,7 @@ def get_most_popular_champions(item=None):
 		SELECT Champion.Id, Champion.Name, Champion.Title,
 		Champion.WikiLink, Champion.Image, COUNT(*),
 		(CAST(COUNT(*) AS float) / (
-			SELECT CAST(COUNT(*) AS float)
+			SELECT CAST(COUNT(distinct totalms.InternalMatchId) AS float)
 			FROM MatchSummoner totalms
 			INNER JOIN MatchSummonerItem totalmsi
 			WHERE totalmsi.ItemId = ?
@@ -227,7 +226,7 @@ def get_most_popular_champions(item=None):
 		parsedResult["championTitle"] = result[2]
 		parsedResult["championWikiLink"] = result[3]
 		parsedResult["championImage"] = result[4]
-		parsedResult["plays"] = results[5]
+		parsedResult["plays"] = result[5]
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
@@ -271,22 +270,17 @@ def get_most_banned_champions():
 		parsedResult["championTitle"] = result[2]
 		parsedResult["championWikiLink"] = result[3]
 		parsedResult["championImage"] = result[4]
-		parsedResult["plays"] = results[5]
+		parsedResult["plays"] = result[5]
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
 	store_cache(cacheKey, parsedResults)
 	return parsedResults
 
-def get_least_banned_champions():
-	results = get_most_banned_champions()
-	results.reverse()
-	return results
-
-def get_highest_wins_champions():
+def get_most_wins_champions():
 	global c
 
-	cacheKey = {"action": "get_highest_winrate_champions"}
+	cacheKey = {"action": "get_most_winrate_champions"}
 
 	cached = get_cache(cacheKey)
 	if cached != None:
@@ -312,13 +306,295 @@ def get_highest_wins_champions():
 	parsedResults = []
 	for result in results:
 		parsedResult = {}
-		parsedResult["itemId"] = result[0]
-		parsedResult["itemName"] = result[1]
-		parsedResult["itemDescription"] = result[2]
-		parsedResult["wikiLink"] = result[3]
-		parsedResult["itemImage"] = result[4]
-		parsedResult["wins"] = result[5]
-		parsedResult["total"] = result[6]
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["plays"] = result[5]
+		parsedResult["percentage"] = result[6]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+def get_least_wins_champions():
+	results = get_most_wins_champions()
+	results.reverse()
+	return results
+
+def get_most_deaths_champions():
+	global c
+
+	cacheKey = {"action": "get_most_deaths_champions"}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+	c.execute('''
+		SELECT Champion.Id, Champion.Name, Champion.Title,
+		Champion.WikiLink, Champion.Image, AVG(ms.Deaths) as avgDeaths
+		FROM MatchSummoner ms
+		INNER JOIN Champion
+		WHERE Champion.Id = ms.ChampionId
+		GROUP BY Champion.Id
+		ORDER BY avgDeaths DESC
+	''')
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+def get_most_kills_champions():
+	global c
+
+	cacheKey = {"action": "get_most_kills_champions"}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+	c.execute('''
+		SELECT Champion.Id, Champion.Name, Champion.Title,
+		Champion.WikiLink, Champion.Image, AVG(ms.Kills) as avgKills
+		FROM MatchSummoner ms
+		INNER JOIN Champion
+		WHERE Champion.Id = ms.ChampionId
+		GROUP BY Champion.Id
+		ORDER BY avgKills DESC
+	''')
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+def get_most_assists_champions():
+	global c
+
+	cacheKey = {"action": "get_most_assists_champions"}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+	c.execute('''
+		SELECT Champion.Id, Champion.Name, Champion.Title,
+		Champion.WikiLink, Champion.Image, AVG(ms.Assists) as avgAssists
+		FROM MatchSummoner ms
+		INNER JOIN Champion
+		WHERE Champion.Id = ms.ChampionId
+		GROUP BY Champion.Id
+		ORDER BY avgAssists DESC
+	''')
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+def get_longest_game_length_champions():
+	global c
+
+	cacheKey = {"action": "get_longest_game_length"}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+
+	c.execute('''
+		SELECT Champion.Id, Champion.Name, Champion.Title,
+		Champion.WikiLink, Champion.Image, AVG(Match.LengthSeconds) as length
+		FROM MatchSummoner ms
+		INNER JOIN Champion
+		INNER JOIN Match
+		WHERE Champion.Id = ms.ChampionId
+		AND ms.InternalMatchId = Match.Id
+		GROUP BY Champion.Id
+		ORDER BY length DESC
+	''')
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+def get_shortest_game_length_champions():
+	results = get_longest_game_length_champions()
+	results.reverse()
+	return results
+
+def get_most_damage_dealt_champions(damageType=None):
+	# can be "true", "magic" or "physical"
+
+	damageTypes = {
+		"magic": "MagicDealtChampions",
+		"physical": "PhysicalDealtChampions",
+		"true": "TrueDealtChampions"
+	}
+
+	global c
+
+	cacheKey = {"action": "get_most_damage_dealt_champions", "damageType": damageType}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+	if damageType == None:
+		c.execute('''
+			SELECT Champion.Id, Champion.Name, Champion.Title,
+			Champion.WikiLink, Champion.Image,
+			AVG(ms.PhysicalDealtChampions + ms.MagicDealtChampions
+				+ ms.TrueDealtChampions) as totalDamage
+			FROM MatchSummoner ms
+			INNER JOIN Champion
+			WHERE Champion.Id = ms.ChampionId
+			GROUP BY Champion.Id
+			ORDER BY totalDamage DESC
+		''')
+	else:
+		c.execute(('''
+			SELECT Champion.Id, Champion.Name, Champion.Title,
+			Champion.WikiLink, Champion.Image, AVG(ms.%s) as damage
+			FROM MatchSummoner ms
+			INNER JOIN Champion
+			WHERE Champion.Id = ms.ChampionId
+			GROUP BY Champion.Id
+			ORDER BY damage DESC
+		''' % damageTypes[damageType]))
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+
+def get_most_damage_received_champions():
+	global c
+
+	cacheKey = {"action": "get_most_damage_received_champions"}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+	c.execute('''
+		SELECT Champion.Id, Champion.Name, Champion.Title,
+		Champion.WikiLink, Champion.Image,
+		AVG(ms.PhysicalReceived + ms.MagicReceived
+			+ ms.TrueReceived) as totalDamage
+		FROM MatchSummoner ms
+		INNER JOIN Champion
+		WHERE Champion.Id = ms.ChampionId
+		GROUP BY Champion.Id
+		ORDER BY totalDamage DESC
+	''')
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
+		parsedResults.append(parsedResult)
+
+	store_cache(cacheKey, parsedResults)
+	return parsedResults
+
+def get_most_gold_champions():
+	global c
+
+	cacheKey = {"action": "get_most_gold_champions"}
+
+	cached = get_cache(cacheKey)
+	if cached != None:
+		return cached
+
+	c.execute('''
+		SELECT Champion.Id, Champion.Name, Champion.Title,
+		Champion.WikiLink, Champion.Image, AVG(ms.Gold) as gold
+		FROM MatchSummoner ms
+		INNER JOIN Champion
+		WHERE Champion.Id = ms.ChampionId
+		GROUP BY Champion.Id
+		ORDER BY gold DESC
+	''')
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["championId"] = result[0]
+		parsedResult["championName"] = result[1]
+		parsedResult["championTitle"] = result[2]
+		parsedResult["championWikiLink"] = result[3]
+		parsedResult["championImage"] = result[4]
+		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
 	store_cache(cacheKey, parsedResults)

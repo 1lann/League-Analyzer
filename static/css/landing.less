@@ -1,3 +1,8 @@
+h2 {
+	font-size: 30px;
+	margin-top: 30px;
+}
+
 table {
 	width: 100%;
 	th, td {
@@ -9,7 +14,6 @@ table {
 	}
 
 	th:last-child, td:last-child {
-		width: 80px;
 		padding-right: 10px;
 	}
 
@@ -41,4 +45,31 @@ table {
 		height: 50px;
 		font-size: 20px;
 	}
+}
+
+.more {
+	float: right;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+
+a {
+	text-decoration: none;
+	color: lighten(#000000, 40%);
+	&:hover {
+		color: lighten(#000000, 10%);
+		text-decoration: underline;
+	}
+}
+
+.icon-left-open {
+	margin-right: 5px;
+}
+
+.icon-right-open {
+	margin-left: 5px;
+}
+
+.statistics-heading {
+	font-weight: bold;
 }

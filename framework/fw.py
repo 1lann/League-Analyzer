@@ -3,7 +3,7 @@
 # Framework pacakge
 # Wrapper for templates package
 
-import cgi
+import sys
 import templates
 from templates import webRootPath
 from string import Template
@@ -16,6 +16,7 @@ def write_header():
 def redirect(path):
 	print("Status: 302 Found")
 	print("Location: " + webRootPath + path + "\r\n\r\n")
+	sys.exit()
 
 def render_header(title, stylesheets = None):
 	args = {}

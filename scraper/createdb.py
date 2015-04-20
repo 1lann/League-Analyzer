@@ -1,7 +1,6 @@
 # createdb package as part of scraper
 # creates the tables for the database
 
-import requests
 import sys
 from riotwatcher import RiotWatcher
 

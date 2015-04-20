@@ -33,4 +33,4 @@ print('''
 </div>
 ''')
 
-f.write_footer()
+fw.render_footer()

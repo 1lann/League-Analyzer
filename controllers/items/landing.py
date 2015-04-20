@@ -22,14 +22,14 @@ from string import Template
 database.open_db()
 
 fw.write_header()
-fw.render_header("Items - League Analyzer", ["navbar.css", "items-landing.css", "fontello.css"])
+fw.render_header("Items - League Analyzer", ["navbar.css", "landing.css", "fontello.css"])
 
 fw.render("components/navbar", {
 	"championsActiveClass": "",
 	"itemsActiveClass": "active"
 })
 
-popularRowTemplate = Template('''
+popular_row_template = Template('''
 <tr onclick="location.assign('$webRootPath/controllers/items/item.py?id=$itemId');">
 	<td>$rank</td>
 	<td><img src="http://ddragon.leagueoflegends.com/cdn/$endpointVersion/img/item/$itemImage"></td>
@@ -38,7 +38,7 @@ popularRowTemplate = Template('''
 </tr>
 ''')
 
-winsRowTemplate = Template('''
+wins_row_template = Template('''
 <tr onclick="location.assign('$webRootPath/controllers/items/item.py?id=$itemId');">
 	<td>$rank</td>
 	<td><img src="http://ddragon.leagueoflegends.com/cdn/$endpointVersion/img/item/$itemImage"></td>
@@ -48,65 +48,65 @@ winsRowTemplate = Template('''
 </tr>
 ''')
 
-renderArgs = {}
+render_args = {}
 
-highestWins = database.get_highest_wins_items()
-highestWinsRows = ""
+most_wins = database.get_most_wins_items()
+most_win_rows = ""
 for i in range(10):
-	args = copy.copy(highestWins[i])
+	args = copy.copy(most_wins[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
 	args["percentage"] = ("%.2f" % ((float(args["wins"])/float(args["total"])) * 100.0))
 	args["wins"] = str(args["wins"])
 	args["webRootPath"] = fw.webRootPath
-	highestWinsRows += winsRowTemplate.safe_substitute(args)
+	most_win_rows += wins_row_template.safe_substitute(args)
 
-renderArgs["unsafe_highestWins"] = highestWinsRows
+render_args["unsafe_mostWins"] = most_win_rows
 
 
-lowestWins = database.get_lowest_wins_items()
-lowestWinsRows = ""
+least_wins = database.get_least_wins_items()
+least_win_rows = ""
 for i in range(10):
-	args = copy.copy(lowestWins[i])
+	args = copy.copy(least_wins[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
 	args["percentage"] = ("%.2f" % ((float(args["wins"])/float(args["total"])) * 100.0 ))
 	args["wins"] = str(args["wins"])
 	args["webRootPath"] = fw.webRootPath
-	lowestWinsRows += winsRowTemplate.safe_substitute(args)
+	least_win_rows += wins_row_template.safe_substitute(args)
 
-renderArgs["unsafe_lowestWins"] = lowestWinsRows
+render_args["unsafe_leastWins"] = least_win_rows
 
 
-mostPopular = database.get_most_popular_items()
-mostPopularRows = ""
+most_popular = database.get_most_popular_items()
+most_popular_rows = ""
 for i in range(10):
-	args = copy.copy(mostPopular[i])
+	args = copy.copy(most_popular[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
 	temp = ("%.2f" % args["percentage"])
 	args["percentage"] = temp
 	args["webRootPath"] = fw.webRootPath
-	mostPopularRows += popularRowTemplate.safe_substitute(args)
+	most_popular_rows += popular_row_template.safe_substitute(args)
 
-renderArgs["unsafe_mostPopular"] = mostPopularRows
+render_args["unsafe_mostPopular"] = most_popular_rows
 
 
-leastPopular = database.get_least_popular_items()
-leastPopularRows = ""
+least_popular = database.get_least_popular_items()
+least_popular_rows = ""
 for i in range(10):
-	args = copy.copy(leastPopular[i])
+	args = copy.copy(least_popular[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
 	temp = ("%.2f" % args["percentage"])
 	args["percentage"] = temp
 	args["webRootPath"] = fw.webRootPath
-	leastPopularRows += popularRowTemplate.safe_substitute(args)
+	least_popular_rows += popular_row_template.safe_substitute(args)
 
-renderArgs["unsafe_leastPopular"] = leastPopularRows
+render_args["unsafe_leastPopular"] = least_popular_rows
 
 
-fw.render("views/items/landing", renderArgs)
+fw.render("views/items/landing", render_args)
 
 fw.render_footer(["navbar.js"])
 
