@@ -77,7 +77,7 @@ def create_db(c, api_key, drop=False):
 		CREATE TABLE IF NOT EXISTS MatchSummoner(
 			Id INTEGER PRIMARY KEY,
 			InternalMatchId INTEGER NOT NULL REFERENCES Match(Id),
-			Tier TEXT NOT NULL,
+			Tier VARCHAR(15) NOT NULL,
 			ChampionId INTEGER NOT NULL REFERENCES Champion(Id),
 			DidWin BOOLEAN NOT NULL,
 			IsOnBlue BOOLEAN NOT NULL,
