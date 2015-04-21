@@ -6,7 +6,6 @@ from riotwatcher import RiotWatcher
 
 def drop_db(c):
 	print("DROP THE (data)BASE!")
-	raw_input()
 	c.execute("DROP TABLE IF EXISTS MatchSummoner")
 	c.execute("DROP TABLE IF EXISTS Champion")
 	c.execute("DROP TABLE IF EXISTS Ban")
@@ -14,7 +13,6 @@ def drop_db(c):
 	c.execute("DROP TABLE IF EXISTS Spell")
 	c.execute("DROP TABLE IF EXISTS Match")
 	c.execute("DROP TABLE IF EXISTS MatchSummonerItem")
-	c.execute("DROP TABLE IF EXISTS Summoner")
 	print("WUWBWUWBUWBUWBUWBUBUW")
 
 def fill_champions(c, api_key):
@@ -71,14 +69,14 @@ def fill_db(c, api_key):
 	fill_spells(c, api_key)
 
 
-def create_db(c, api_key):
-	# drop_db(c)
+def create_db(c, api_key, drop=False):
+	if drop:
+		drop_db(c)
 
 	c.execute('''
 		CREATE TABLE IF NOT EXISTS MatchSummoner(
 			Id INTEGER PRIMARY KEY,
 			InternalMatchId INTEGER NOT NULL REFERENCES Match(Id),
-			InternalSummonerId INTEGER REFERENCES Summoner(Id),
 			Tier TEXT NOT NULL,
 			ChampionId INTEGER NOT NULL REFERENCES Champion(Id),
 			DidWin BOOLEAN NOT NULL,
@@ -99,7 +97,7 @@ def create_db(c, api_key):
 			MagicReceived INTEGER NOT NULL,
 			TrueReceived INTEGER NOT NULL,
 			Lane TEXT NOT NULL,
-			Role TEXT,
+			Role TEXT NOT NULL,
 			AllyJungleMonsters INTEGER NOT NULL,
 			EnemyJungleMonsters INTEGER NOT NULL,
 			Gold INTEGER NOT NULL,
@@ -152,7 +150,7 @@ def create_db(c, api_key):
 		CREATE TABLE IF NOT EXISTS Match(
 			Id INTEGER PRIMARY KEY,
 			MatchId INTEGER NOT NULL,
-			Region VARCHAR(5),
+			Region VARCHAR(5) NOT NULL,
 			WinnerIsBlue BOOLEAN NOT NULL,
 			AverageTier VARCHAR(15) NOT NULL,
 			Time TIMESTAMP NOT NULL,
@@ -169,14 +167,5 @@ def create_db(c, api_key):
 		)
 	''')
 
-	c.execute('''
-		CREATE TABLE IF NOT EXISTS Summoner(
-			Id INTEGER PRIMARY KEY,
-			SummonerId INTEGER NOT NULL,
-			Region VARCHAR(5) NOT NULL,
-			Tier VARCHAR(15) NOT NULL,
-			Division INTEGER
-		)
-	''')
-
-	# fill_db(c, api_key) # Comment when drop db is disabled
+	if drop:
+		fill_db(c, api_key)

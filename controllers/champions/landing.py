@@ -218,31 +218,38 @@ for i in range(10):
 render_args["unsafe_mostDamageReceived"] = most_damage_received_rows
 
 
-render_args["averagePickrate"] = "%.2f" % ()
+pickrateSum = 0
+for i in range(len(most_popular)):
+	pickrateSum += most_popular[i]["percentage"]
+
+render_args["averagePickrate"] = "%.2f" % (pickrateSum / len(most_popular))
+
+banrateSum = 0
+for i in range(len(most_banned)):
+	banrateSum += most_banned[i]["percentage"]
+
+render_args["averageBanrate"] = "%.2f" % (banrateSum / len(most_banned))
 
 
-render_args["averageBanrate"] = "%.2f" % ()
+render_args["averageGameLength"] = "%.1f" % (database.get_average_game_length()/60)
 
 
-render_args["averageGameLength"] = "%.1f" % ()
+render_args["averageKills"] = "%.1f" % (database.get_average_kills())
 
 
-render_args["averageKills"] = "%.1f" % ()
+render_args["averageDeaths"] = "%.1f" % (database.get_average_deaths())
 
 
-render_args["averageDeaths"] = "%.1f" % ()
+render_args["averageAssists"] = "%.1f" % (database.get_average_assists())
 
 
-render_args["averageAssists"] = "%.1f" % ()
+render_args["averageDamage"] = "%.0f" % (database.get_average_damage_dealt_champions())
 
 
-render_args["averageDamage"] = "%.0f" % ()
+render_args["averageDamageReceived"] = "%.0f" % (database.get_average_damage_received())
 
 
-render_args["averageDamageReceived"] = "%.0f" % ()
-
-
-render_args["averageGold"] = "%.0f" % ()
+render_args["averageGold"] = "%.0f" % (database.get_average_gold())
 
 
 fw.render("views/champions/landing", render_args)

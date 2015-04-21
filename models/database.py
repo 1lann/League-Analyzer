@@ -53,9 +53,9 @@ def store_cache(key, value):
 def get_most_wins_items(champion=None):
 	global c
 
-	cacheKey = {"action": "get_most_winrate_items", "champion": champion}
+	cache_key = {"action": "get_most_winrate_items", "champion": champion}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -105,7 +105,7 @@ def get_most_wins_items(champion=None):
 		parsedResult["total"] = result[6]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_least_wins_items(champion=None):
@@ -116,9 +116,9 @@ def get_least_wins_items(champion=None):
 def get_most_popular_items(champion=None):
 	global c
 
-	cacheKey = {"action": "get_most_popular_items", "champion": champion}
+	cache_key = {"action": "get_most_popular_items", "champion": champion}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -165,7 +165,7 @@ def get_most_popular_items(champion=None):
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_least_popular_items(champion=None):
@@ -176,9 +176,9 @@ def get_least_popular_items(champion=None):
 def get_most_popular_champions(item=None):
 	global c
 
-	cacheKey = {"action": "get_most_popular_champions", "item": item}
+	cache_key = {"action": "get_most_popular_champions", "item": item}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -188,12 +188,12 @@ def get_most_popular_champions(item=None):
 		Champion.WikiLink, Champion.Image, COUNT(*),
 		(CAST(COUNT(*) AS float) / (
 			SELECT CAST(COUNT(distinct InternalMatchId) AS float) FROM MatchSummoner
-		)) * 100.0 as playrate
+		)) * 100.0 as pickrate
 		FROM MatchSummoner
 		INNER JOIN Champion
 		WHERE Champion.Id = MatchSummoner.ChampionId
 		GROUP BY Champion.Id
-		ORDER BY playrate DESC
+		ORDER BY pickrate DESC
 		''')
 	else:
 		c.execute('''
@@ -205,7 +205,7 @@ def get_most_popular_champions(item=None):
 			INNER JOIN MatchSummonerItem totalmsi
 			WHERE totalmsi.ItemId = ?
 			AND totalmsi.MatchSummonerId = totalms.Id
-		)) * 100.0 as playrate
+		)) * 100.0 as pickrate
 		FROM MatchSummoner ms
 		INNER JOIN Champion
 		INNER JOIN MatchSummonerItem msi
@@ -213,7 +213,7 @@ def get_most_popular_champions(item=None):
 		AND msi.ItemId = ?
 		AND msi.MatchSummonerId = ms.Id
 		GROUP BY Champion.Id
-		ORDER BY playrate DESC
+		ORDER BY pickrate DESC
 		''', (item, item))
 
 	results = c.fetchall()
@@ -230,7 +230,7 @@ def get_most_popular_champions(item=None):
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_least_popular_champions(item=None):
@@ -241,9 +241,9 @@ def get_least_popular_champions(item=None):
 def get_most_banned_champions():
 	global c
 
-	cacheKey = {"action": "get_most_banned_champions"}
+	cache_key = {"action": "get_most_banned_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -274,15 +274,15 @@ def get_most_banned_champions():
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_most_wins_champions():
 	global c
 
-	cacheKey = {"action": "get_most_winrate_champions"}
+	cache_key = {"action": "get_most_winrate_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -315,7 +315,7 @@ def get_most_wins_champions():
 		parsedResult["percentage"] = result[6]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_least_wins_champions():
@@ -326,9 +326,9 @@ def get_least_wins_champions():
 def get_most_deaths_champions():
 	global c
 
-	cacheKey = {"action": "get_most_deaths_champions"}
+	cache_key = {"action": "get_most_deaths_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -355,15 +355,15 @@ def get_most_deaths_champions():
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_most_kills_champions():
 	global c
 
-	cacheKey = {"action": "get_most_kills_champions"}
+	cache_key = {"action": "get_most_kills_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -390,15 +390,15 @@ def get_most_kills_champions():
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_most_assists_champions():
 	global c
 
-	cacheKey = {"action": "get_most_assists_champions"}
+	cache_key = {"action": "get_most_assists_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -425,15 +425,15 @@ def get_most_assists_champions():
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_longest_game_length_champions():
 	global c
 
-	cacheKey = {"action": "get_longest_game_length"}
+	cache_key = {"action": "get_longest_game_length"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -463,7 +463,7 @@ def get_longest_game_length_champions():
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_shortest_game_length_champions():
@@ -482,9 +482,9 @@ def get_most_damage_dealt_champions(damageType=None):
 
 	global c
 
-	cacheKey = {"action": "get_most_damage_dealt_champions", "damageType": damageType}
+	cache_key = {"action": "get_most_damage_dealt_champions", "damageType": damageType}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -524,16 +524,16 @@ def get_most_damage_dealt_champions(damageType=None):
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 
 def get_most_damage_received_champions():
 	global c
 
-	cacheKey = {"action": "get_most_damage_received_champions"}
+	cache_key = {"action": "get_most_damage_received_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -562,15 +562,15 @@ def get_most_damage_received_champions():
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
 
 def get_most_gold_champions():
 	global c
 
-	cacheKey = {"action": "get_most_gold_champions"}
+	cache_key = {"action": "get_most_gold_champions"}
 
-	cached = get_cache(cacheKey)
+	cached = get_cache(cache_key)
 	if cached != None:
 		return cached
 
@@ -597,5 +597,203 @@ def get_most_gold_champions():
 		parsedResult["num"] = result[5]
 		parsedResults.append(parsedResult)
 
-	store_cache(cacheKey, parsedResults)
+	store_cache(cache_key, parsedResults)
 	return parsedResults
+
+
+def get_average_game_length(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_game_length", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(LengthSeconds)
+			FROM Match
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(LengthSeconds)
+			FROM Match
+			INNER JOIN MatchSummoner
+			WHERE MatchSummoner.InternalMatchId = Match.Id
+			AND MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
+
+
+def get_average_kills(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_kills", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(Kills)
+			FROM MatchSummoner
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(Kills)
+			FROM MatchSummoner
+			WHERE MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
+
+
+def get_average_deaths(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_deaths", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(Deaths)
+			FROM MatchSummoner
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(Deaths)
+			FROM MatchSummoner
+			WHERE MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
+
+
+def get_average_assists(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_assists", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(Assists)
+			FROM MatchSummoner
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(Assists)
+			FROM MatchSummoner
+			WHERE MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
+
+
+def get_average_damage_dealt_champions(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_damage_dealt_champions", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(PhysicalDealtChampions + MagicDealtChampions + TrueDealtChampions)
+			FROM MatchSummoner
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(PhysicalDealtChampions + MagicDealtChampions + TrueDealtChampions)
+			FROM MatchSummoner
+			WHERE MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
+
+
+def get_average_damage_received(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_damage_received", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(PhysicalReceived + MagicReceived + TrueReceived)
+			FROM MatchSummoner
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(PhysicalReceived + MagicReceived + TrueReceived)
+			FROM MatchSummoner
+			WHERE MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
+
+
+def get_average_gold(champion=None):
+	global c
+
+	cache_key = {"action": "get_average_gold", "champion": champion}
+
+	cached = get_cache(cache_key)
+	if cached != None:
+		return cached
+
+	if champion == None:
+		c.execute('''
+			SELECT AVG(Gold)
+			FROM MatchSummoner
+		''')
+	else:
+		c.execute('''
+			SELECT AVG(Gold)
+			FROM MatchSummoner
+			WHERE MatchSummoner.ChampionId = %d
+		''' % champion)
+
+	result = c.fetchone()[0]
+
+	store_cache(cache_key, result)
+
+	return result
