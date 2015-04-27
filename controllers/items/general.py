@@ -64,7 +64,7 @@ database.open_db()
 render_args = {}
 
 if filter == "mostwins":
-	highest_wins = database.get_highest_wins_items()
+	highest_wins = database.get_most_wins_items()
 	highest_wins_rows = ""
 	for i in range(len(highest_wins)):
 		args = copy.copy(highest_wins[i])

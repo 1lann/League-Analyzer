@@ -27,9 +27,7 @@ database.open_db()
 
 champion_info = database.get_champion_info(champion_id)
 if not champion_info:
-	champion_id = "102"
-	champion_info = database.get_champion_info(champion_id)
-	# fw.redirect("/controllers/champions/landing.py")
+	fw.redirect("/controllers/champions/landing.py")
 
 fw.write_header()
 fw.render_header(champion_info["championName"] + " - League Analyzer",
