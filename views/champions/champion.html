@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="search-area">
+		<form action="$webRootPath/controllers/champions/search.py" method="GET">
+			<div class="row">
+				<div class="five columns">
+					<a class="back-link" href="$webRootPath/controllers/champions/landing.py"><span class="icon-left-open"></span>Back to champions landing page</a>
+				</div>
+				<input class="five columns" type="search" name="query" placeholder="Looking for a specific champion?">
+				<input class="two columns button" type="submit" value="Search">
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<div class="splash-image five columns">
+			<h1>$champion_name</h1>
+			<p>$champion_title</p>
+			<img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion_splash">
+		</div>
+		<div class="splash-side-statistics seven columns">
+			<h3>Statistics and rankings</h3>
+			<table>
+			<thead>
+				<tr>
+					<th>Statistic</th><th>Value</th><th>Rank</th><th>Deviation from Average</th>
+				</tr>
+			</thead>
+			$unsafe_statistics
+			</table>
+		</div>
+	</div>
+	<h3>Damage composition to enemy champions</h3>
+	<div class="row">
+		<div class="four columns">
+			<span class="magic-damage"><span style="font-weight:bold;">Magic damage: </span>$magic_dealt</span><br>
+			<span class="physical-damage"><span style="font-weight:bold;">Physical damage: </span>$physical_dealt</span><br>
+			<span class="true-damage"><span style="font-weight:bold;">True damage: </span>$true_dealt</span><br>
+		</div>
+		<div class="eight columns damage-block">
+			<div class="magic-block" style="width:$magic_dealt;">
+			</div>
+			<div class="physical-block" style="width:$physical_dealt;">
+			</div>
+			<div class="true-block" style="width:$true_dealt;">
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="twelve columns">
+			<h3>Most popular items</h3>
+			<table class="items-table">
+				<thead><tr><th>Rank</th><th></th><th>Item</th><th>Buy Rate</th><th>Winrate</th></tr></thead>
+				<tbody>
+					$unsafe_most_popular
+				</tbody>
+			</table>
+		</div>
+		<!-- <div class="six columns">
+			<h3>Highest winrate items</h3>
+			<table class="items-table">
+				<thead><tr><th>Rank</th><th></th><th>Item</th><th>Wins</th><th>Winrate</th></tr></thead>
+				<tbody>
+					$unsafe_most_wins
+				</tbody>
+			</table>
+		</div> -->
+	</div>
+</div>

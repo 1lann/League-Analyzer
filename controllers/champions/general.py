@@ -12,7 +12,7 @@ while os.path.basename(rootPath) != "analyzer":
 sys.path.append(rootPath + "/models")
 sys.path.append(rootPath + "/framework")
 
-# Items landing page
+# Champions general page
 
 import fw
 import database
@@ -175,7 +175,7 @@ elif selected_template == game_length_row_template:
 		args = copy.copy(selected_array[i])
 		args["rank"] = str(i + 1)
 		args["endpointVersion"] = fw.endpointVersion
-		args["length"] = ("%.1f" % args["num"] / 60)
+		args["length"] = ("%.1f" % (args["num"] / 60))
 		args["webRootPath"] = fw.webRootPath
 		render_args["unsafe_table"] += selected_template.safe_substitute(args)
 elif selected_template == num_row_template:
@@ -191,7 +191,7 @@ elif selected_template == znum_row_template:
 		args = copy.copy(selected_array[i])
 		args["rank"] = str(i + 1)
 		args["endpointVersion"] = fw.endpointVersion
-		args["num"] = ("%.0f" % args["num"])
+		args["num"] = "{:,}".format(int(args["num"]))
 		args["webRootPath"] = fw.webRootPath
 		render_args["unsafe_table"] += selected_template.safe_substitute(args)
 

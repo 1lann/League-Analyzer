@@ -12,7 +12,7 @@ while os.path.basename(rootPath) != "analyzer":
 sys.path.append(rootPath + "/models")
 sys.path.append(rootPath + "/framework")
 
-# Items landing page
+# Champions landing page
 
 import fw
 import database
@@ -187,7 +187,7 @@ for i in range(10):
 	args = copy.copy(most_gold[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
-	args["num"] = ("%.0f" % args["num"])
+	args["num"] = "{:,}".format(int(args["num"]))
 	args["webRootPath"] = fw.webRootPath
 	most_gold_rows += num_row_template.safe_substitute(args)
 
@@ -199,7 +199,7 @@ for i in range(10):
 	args = copy.copy(most_damage[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
-	args["num"] = ("%.0f" % args["num"])
+	args["num"] = "{:,}".format(int(args["num"]))
 	args["webRootPath"] = fw.webRootPath
 	most_damage_rows += num_row_template.safe_substitute(args)
 
@@ -211,7 +211,7 @@ for i in range(10):
 	args = copy.copy(most_damage_received[i])
 	args["rank"] = str(i + 1)
 	args["endpointVersion"] = fw.endpointVersion
-	args["num"] = ("%.0f" % args["num"])
+	args["num"] = "{:,}".format(int(args["num"]))
 	args["webRootPath"] = fw.webRootPath
 	most_damage_received_rows += num_row_template.safe_substitute(args)
 
@@ -243,13 +243,13 @@ render_args["averageDeaths"] = "%.1f" % (database.get_average_deaths())
 render_args["averageAssists"] = "%.1f" % (database.get_average_assists())
 
 
-render_args["averageDamage"] = "%.0f" % (database.get_average_damage_dealt_champions())
+render_args["averageDamage"] = "{:,}".format(int(database.get_average_damage_dealt_champions()))
 
 
-render_args["averageDamageReceived"] = "%.0f" % (database.get_average_damage_received())
+render_args["averageDamageReceived"] = "{:,}".format(int(database.get_average_damage_received()))
 
 
-render_args["averageGold"] = "%.0f" % (database.get_average_gold())
+render_args["averageGold"] = "{:,}".format(int(database.get_average_gold()))
 
 
 fw.render("views/champions/landing", render_args)

@@ -3,8 +3,7 @@
 	<div class="row">
 		<div class="twelve columns">
 			<div class="search-area">
-				<form action="$webRootPath/controllers/search.py" method="GET">
-					<input type="hidden" name="filter" value="champions">
+				<form action="$webRootPath/controllers/champions/search.py" method="GET">
 					<div class="row">
 						<input class="nine columns" type="search" name="query" placeholder="Looking for a specific champion?">
 						<input class="three columns button" type="submit" value="Search">
@@ -16,16 +15,30 @@
 	<div class="row">
 		<div class="twelve columns">
 			<h2>Average statistics</h2>
-			<p class="general-area">
-				<span class="statistics-heading">Champion pick rate:</span>
-				$averagePickrate%<br>
-				<span class="statistics-heading">Champion ban rate:</span>
-				$averageBanrate%<br>
-				<span class="statistics-heading">Game length:</span>
-				$averageGameLength mins<br>
-				<span class="statistics-heading">Champion KDA:</span>
-				$averageKills/$averageDeaths/$averageAssists<br>
-			</p>
+			<div class="row">
+				<div class="six columns"
+					<p class="general-area">
+						<span class="statistics-heading">Champion pick rate:</span>
+						$averagePickrate%<br>
+						<span class="statistics-heading">Champion ban rate:</span>
+						$averageBanrate%<br>
+						<span class="statistics-heading">Game length:</span>
+						$averageGameLength mins<br>
+						<span class="statistics-heading">Champion KDA:</span>
+						$averageKills/$averageDeaths/$averageAssists<br>
+					</p>
+				</div>
+				<div class="six columns"
+					<p class="general-area">
+						<span class="statistics-heading">Damage dealt:</span>
+						$averageDamage<br>
+						<span class="statistics-heading">Damage received:</span>
+						$averageDamageReceived<br>
+						<span class="statistics-heading">Gold earned:</span>
+						$averageGold<br>
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -152,7 +165,7 @@
 		<div class="six columns">
 			<h2>Assists. A lot.</h2>
 			<table>
-			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Deaths</th></tr></thead>
+			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Avg. Assists</th></tr></thead>
 			<tbody>
 				$unsafe_mostAssists
 			</tbody>
@@ -194,7 +207,7 @@
 			</div>
 		</div>
 		<div class="six columns">
-			<h2>Peels so hard</h2>
+			<h2>Peels so hard.</h2>
 			<table>
 			<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Damage Taken</th></tr></thead>
 			<tbody>

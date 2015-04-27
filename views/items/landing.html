@@ -4,7 +4,6 @@
 		<div class="twelve columns">
 			<div class="search-area">
 				<form action="$webRootPath/controllers/search.py" method="GET">
-					<input type="hidden" name="filter" value="items">
 					<div class="row">
 						<input class="nine columns" type="search" name="query" placeholder="Looking for a specific item?">
 						<input class="three columns button" type="submit" value="Search">
@@ -16,7 +15,7 @@
 	<div class="row">
 		<div class="six columns">
 			<h2>Items people like buying</h2>
-			<table>
+			<table class="buy-table">
 			<thead><tr><th>Rank</th><th></th><th>Item</th><th>Buy Rate</th></tr></thead>
 			<tbody>
 				$unsafe_mostPopular
@@ -46,7 +45,7 @@
 	<div class="row">
 		<div class="six columns">
 			<h2>Who buys that?</h2>
-			<table>
+			<table class="buy-table">
 			<thead><tr><th>Rank</th><th></th><th>Item</th><th>Buy Rate</th></tr></thead>
 			<tbody>
 				$unsafe_leastPopular

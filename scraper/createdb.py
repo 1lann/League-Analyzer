@@ -2,18 +2,19 @@
 # creates the tables for the database
 
 import sys
+
 from riotwatcher import RiotWatcher
 
 def drop_db(c):
-	print("DROP THE (data)BASE!")
-	c.execute("DROP TABLE IF EXISTS MatchSummoner")
+	# print("DROP THE (data)BASE!")
 	c.execute("DROP TABLE IF EXISTS Champion")
-	c.execute("DROP TABLE IF EXISTS Ban")
 	c.execute("DROP TABLE IF EXISTS Item")
 	c.execute("DROP TABLE IF EXISTS Spell")
-	c.execute("DROP TABLE IF EXISTS Match")
-	c.execute("DROP TABLE IF EXISTS MatchSummonerItem")
-	print("WUWBWUWBUWBUWBUWBUBUW")
+	# c.execute("DROP TABLE IF EXISTS Match")
+	# c.execute("DROP TABLE IF EXISTS Ban")
+	# c.execute("DROP TABLE IF EXISTS MatchSummoner")
+	# c.execute("DROP TABLE IF EXISTS MatchSummonerItem")
+	# print("WUWBWUWBUWBUWBUWBUBUW")
 
 def fill_champions(c, api_key):
 	api = RiotWatcher(api_key)
@@ -26,11 +27,13 @@ def fill_champions(c, api_key):
 	for _, champion in all_champions["data"].iteritems():
 		wiki_url = "http://leagueoflegends.wikia.com/wiki/" + champion["name"]
 
+		splash_image = champion["key"] + "_0.jpg"
+
 		c.execute('''
-			INSERT INTO Champion (Id, Name, Title, WikiLink, Image)
-			VALUES (?, ?, ?, ?, ?)
+			INSERT INTO Champion (Id, Name, Title, WikiLink, Image, SplashImage)
+			VALUES (?, ?, ?, ?, ?, ?)
 		''', (champion["id"], champion["name"], champion["title"],
-			wiki_url, champion["image"]["full"]))
+			wiki_url, champion["image"]["full"], splash_image))
 
 def fill_items(c, api_key):
 	api = RiotWatcher(api_key)
@@ -116,7 +119,8 @@ def create_db(c, api_key, drop=False):
 			Name TEXT NOT NULL,
 			Title TEXT NOT NULL,
 			WikiLink TEXT NOT NULL,
-			Image TEXT NOT NULL
+			Image TEXT NOT NULL,
+			SplashImage TEXT NOT NULL
 		)
 	''')
 

@@ -30,7 +30,7 @@ createdb.create_db(database.c, api_key, True)
 print('''
 <div class="container">
 <h2>League Analyzer Administration</h2>
-<h4>Database re-created/h4>
+<h4>Static database metadata refreshed</h4>
 </div>
 ''')
 

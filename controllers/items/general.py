@@ -12,7 +12,7 @@ while os.path.basename(rootPath) != "analyzer":
 sys.path.append(rootPath + "/models")
 sys.path.append(rootPath + "/framework")
 
-# Items landing page
+# Items general page
 
 import fw
 import database
