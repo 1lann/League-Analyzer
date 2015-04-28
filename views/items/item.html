@@ -1,0 +1,46 @@
+<div class="container">
+	<div class="search-area">
+		<form action="$webRootPath/controllers/items/search.py" method="GET">
+			<div class="row">
+				<div class="five columns">
+					<a class="back-link" href="$webRootPath/controllers/items/landing.py"><span class="icon-left-open"></span>Back to items landing page</a>
+				</div>
+				<input class="five columns" type="search" name="query" placeholder="Looking for a specific item?">
+				<input class="two columns button" type="submit" value="Search">
+			</div>
+		</form>
+	</div>
+	<div class="row heading-area">
+		<img src="http://ddragon.leagueoflegends.com/cdn/$endpointVersion/img/item/$item_image">
+		<h1>$item_name</h1>
+	</div>
+	<div class="row">
+		<div class="four columns item-description">
+			$unsafe_item_description
+		</div>
+		<div class="eight columns">
+			<table>
+			<tbody>
+				<tr onclick="location.assign('http://localhost/analyzer/controllers/items/general.py?filter=mostpopular');">
+					<td class="heading">Buy rate</td>
+					<td class="value">$buy_rate% of champions per game</td>
+					<td class="rank">Rank: <span style="font-weight:bold;">$buy_rank</span>/$num_items</td>
+				</tr>
+				<tr onclick="location.assign('http://localhost/analyzer/controllers/items/general.py?filter=mostwins');">
+					<td class="heading">Winrate</td>
+					<td class="value">$winrate% of games bought in</td>
+					<td class="rank">Rank: <span style="font-weight:bold;">$wins_rank</span>/$num_items</td>
+				</tr>
+			</tbody>
+			</table>
+			<h3>Most popular on</h3>
+			<table class="champions-table">
+				<thead><tr><th>Rank</th><th></th><th>Champion</th><th>Buy Rate</th></tr></thead>
+				<tbody>
+					$unsafe_most_popular
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>

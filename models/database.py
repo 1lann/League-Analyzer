@@ -239,21 +239,19 @@ def get_most_popular_champions(item=None):
 		SELECT Champion.Id, Champion.Name, Champion.Title,
 		Champion.Image, COUNT(*),
 		(CAST(COUNT(*) AS float) / (
-			SELECT CAST(COUNT(distinct totalms.InternalMatchId) AS float)
+			SELECT CAST(COUNT(*) AS float)
 			FROM MatchSummoner totalms
-			INNER JOIN MatchSummonerItem totalmsi
-			WHERE totalmsi.ItemId = ?
-			AND totalmsi.MatchSummonerId = totalms.Id
+			WHERE totalms.ChampionId = Champion.Id
 		)) * 100.0 as pickrate
 		FROM MatchSummoner ms
 		INNER JOIN Champion
 		INNER JOIN MatchSummonerItem msi
-		WHERE Champion.Id = MatchSummoner.ChampionId
+		WHERE Champion.Id = ms.ChampionId
 		AND msi.ItemId = ?
 		AND msi.MatchSummonerId = ms.Id
 		GROUP BY Champion.Id
 		ORDER BY pickrate DESC
-		''', (item, item))
+		''', (item,))
 
 	results = c.fetchall()
 
@@ -800,6 +798,28 @@ def get_champion_info(champion):
 
 	return parsedResult
 
+def get_item_info(item):
+	global c
+
+	c.execute('''
+		SELECT Id, Name, Description, Image
+		FROM Item
+		WHERE Id = ?
+	''', (item,))
+
+	result = c.fetchone()
+
+	if not result:
+		return False
+
+	parsedResult = {}
+	parsedResult["itemId"] = result[0]
+	parsedResult["itemName"] = result[1]
+	parsedResult["itemDescription"] = result[2]
+	parsedResult["itemImage"] = result[3]
+
+	return parsedResult
+
 def get_damage_dealt_composition(champion):
 	global c
 
@@ -844,6 +864,27 @@ def search_champions(query):
 		parsedResult["championName"] = result[1]
 		parsedResult["championTitle"] = result[2]
 		parsedResult["championImage"] = result[3]
+		parsedResults.append(parsedResult)
+
+	return parsedResults
+
+def search_items(query):
+	global c
+
+	c.execute('''
+		SELECT Id, Name, Image
+		FROM Item
+		WHERE Name LIKE ?
+	''', (query + "%",))
+
+	results = c.fetchall()
+
+	parsedResults = []
+	for result in results:
+		parsedResult = {}
+		parsedResult["itemId"] = result[0]
+		parsedResult["itemName"] = result[1]
+		parsedResult["itemImage"] = result[2]
 		parsedResults.append(parsedResult)
 
 	return parsedResults

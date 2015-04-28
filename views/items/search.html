@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<div class="twelve columns">
+			<div class="search-area">
+				<form action="$webRootPath/controllers/items/search.py" method="GET">
+					<div class="row">
+						<input class="nine columns" type="search" name="query" placeholder="Search for another item?">
+						<input class="three columns button" type="submit" value="Search">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<h1 class="search-heading">Search results </h1><h3 class="search-heading">for "$query"</h3><br><br>
+	$unsafe_no_results
+	<div class="row">
+		<div class="results nine columns">
+			<table>
+			<tbody>
+			$unsafe_results
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
