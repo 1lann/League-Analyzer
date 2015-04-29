@@ -1,0 +1,46 @@
+<div class="container">
+<a href="$webRootPath/controllers/admin/index.py"><span class="icon-left-open"></span>Back to administration</a>
+<br><br>
+<h1>Add a match</h1>
+$unsafe_alert
+<form action="$webRootPath/controllers/admin/add-match.py" method="GET">
+	<input type="hidden" name="add_data" value="true">
+	<div class="row">
+		<div class="six columns">
+			<label>Game start time (as UNIX time in nanoseconds)</label>
+			<input class="u-full-width" type="text" name="time">
+		</div>
+		<div class="six columns">
+			<label>Match ID from the League of Legends servers</label>
+			<input class="u-full-width" type="text" name="match_id">
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<label>Region. Ex: oce, na, euw</label>
+			<input class="u-full-width" type="text" name="region">
+		</div>
+		<div class="six columns">
+			<label>Did blue team win? (1 for yes, 0 for no)</label>
+			<input class="u-full-width" type="text" name="blue_win">
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<label>Average Tier of Match. Ex: UNRANKED, DIAMOND</label>
+			<input class="u-full-width" type="text" name="tier">
+		</div>
+		<div class="six columns">
+			<label>Queue Type. Ex: URF_5x5</label>
+			<input class="u-full-width" type="text" name="queue_type">
+		</div>
+	</div>
+	<div class="row">
+		<div class="six columns">
+			<label>Length of match (in seconds)</label>
+			<input class="u-full-width" type="text" name="length">
+		</div>
+	</div>
+	<input class="button-primary" type="submit" value="Submit">
+</form>
+</div>

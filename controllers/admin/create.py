@@ -22,17 +22,18 @@ database.open_db()
 api_key = "90063c6c-4471-455a-b58d-d6d32b0a040c"
 
 fw.write_header()
-fw.render_header("Create Database - Administration")
+fw.render_header("Create Database - Administration", ["admin.css", "fontello.css"])
 
 database.clear_cache()
 createdb.create_db(database.c, api_key, True)
 
 print('''
 <div class="container">
+<a href="%s/controllers/admin/index.py"><span class="icon-left-open"></span>Back to administration</a>
 <h2>League Analyzer Administration</h2>
 <h4>Static database metadata refreshed</h4>
 </div>
-''')
+''' % fw.webRootPath)
 
 database.close_db()
 
