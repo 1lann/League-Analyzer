@@ -8,7 +8,7 @@ import templates
 from templates import webRootPath
 from string import Template
 
-endpointVersion = "5.6.1"
+endpointVersion = "5.8.1"
 
 def write_header():
 	print("Content-type: text/html; charset=utf-8\r")

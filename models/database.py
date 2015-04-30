@@ -888,4 +888,3 @@ def search_items(query):
 		parsedResults.append(parsedResult)
 
 	return parsedResults
-
