@@ -117,11 +117,11 @@ statistics_set = [
 		"invert": False
 	},
 	{
-		"function": database.get_most_kills_champions,
+		"function": database.get_most_deaths_champions,
 		"heading": "Deaths",
 		"key": "num",
 		"format": oneFormat,
-		"link": "mostkills",
+		"link": "mostdeaths",
 		"invert": True
 	},
 	{
