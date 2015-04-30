@@ -21,12 +21,12 @@
 		<div class="eight columns">
 			<table>
 			<tbody>
-				<tr onclick="location.assign('http://localhost/analyzer/controllers/items/general.py?filter=mostpopular');">
+				<tr onclick="location.assign('$webRootPath/controllers/items/general.py?filter=mostpopular');">
 					<td class="heading">Buy rate</td>
 					<td class="value">$buy_rate% of champions per game</td>
 					<td class="rank">Rank: <span style="font-weight:bold;">$buy_rank</span>/$num_items</td>
 				</tr>
-				<tr onclick="location.assign('http://localhost/analyzer/controllers/items/general.py?filter=mostwins');">
+				<tr onclick="location.assign('$webRootPath/controllers/items/general.py?filter=mostwins');">
 					<td class="heading">Winrate</td>
 					<td class="value">$winrate% of games bought in</td>
 					<td class="rank">Rank: <span style="font-weight:bold;">$wins_rank</span>/$num_items</td>
